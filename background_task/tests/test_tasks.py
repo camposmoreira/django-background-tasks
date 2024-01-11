@@ -50,7 +50,8 @@ def empty_task():
 
 
 def record_task(*arg, **kw):
-    _recorded.append((arg, kw))
+
+    _recorded.append((kw["args"], kw["kwargs"]))
 
 
 class TestBackgroundDecorator(TransactionTestCase):
@@ -132,6 +133,7 @@ class TestTaskProxy(TransactionTestCase):
     def test_run_task(self):
         # TODO: Not working
         run_task(self.proxy.name, [], {})
+
         self.assertEqual(((), {}), _recorded.pop())
 
         run_task(self.proxy.name, ['hi'], {})
